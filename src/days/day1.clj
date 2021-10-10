@@ -1,7 +1,6 @@
-(ns day1
+(ns days.day1
   (:require [clojure.string :as str])
-  (:require [helpers :refer [getInput]])
-)
+  (:require [utils.helpers :refer [getInput]]))
 
 (defn check-list-for-vector
     "Checking if list contains certain vector without checking cardinal direction"
