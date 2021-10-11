@@ -2,8 +2,8 @@
   (:require [clojure.java.io :as io])
 )
 
-(defn getInput [path]
-  (with-open [r (io/reader path)]
-    (line-seq r)
-  )
+(defn getInput
+  [path]
+  (with-open [rdr (io/reader path)]
+    (doall (line-seq rdr)))
 )
