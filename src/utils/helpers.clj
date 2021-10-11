@@ -3,8 +3,7 @@
 )
 
 (defn getInput
-  [path f]
+  [path]
   (with-open [rdr (io/reader path)]
-    ; (line-seq r))
-    (doall (map f (line-seq rdr))))
+    (doall (line-seq rdr)))
 )

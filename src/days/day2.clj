@@ -2,49 +2,46 @@
   (:require [utils.helpers :refer [getInput]])
   (:require [clojure.string :as str]))
 
+(defn get-number-for-position
+  [pos-vector]
+  (def x-pos (first pos-vector))
+  (def y-pos (second pos-vector))
+  (get (get (vector (vector 1 2 3) (vector 4 5 6) (vector 7 8 9)) y-pos) x-pos)
+)
 
-; (defn get-digit
-;   "Get digit from matrix based on sequence"
-;   [sequence]
-;   (println "sequence" sequence)
-; )
+(defn parse-sequence
+  "Recursevely parse sequences"
+  [sequence start-vector]
+  (reduce (fn [xy character]
+        (identity (cond
+          (= character \L) (if (= (dec (first xy))  -1) xy (assoc xy 0 (dec (first xy))))
+          (= character \R) (if (= (inc (first xy))   3) xy (assoc xy 0 (inc (first xy))))
+          (= character \U) (if (= (dec (second xy)) -1) xy (assoc xy 1 (dec (second xy))))
+          (= character \D) (if (= (inc (second xy))  3) xy (assoc xy 1 (inc (second xy))))
+        ))
+      )
+      start-vector
+      sequence
+  )
+)
 
 (defn do-part-1
   "Get bathroom code"
-  [sequence]
-  (println sequence)
-  (def charList (seq (char-array sequence)))
-
-  (println (reduce (fn [xy character] (
-    (cond
-    (= character \L) (assoc xy 0 (if (= (dec (first xy)) -1) (first xy) (dec (first xy))))
-    (= character \R) (assoc xy 0 (if (= (inc (first xy)) 3) (first xy) (inc (first xy))))
-    (= character \U) (assoc xy 1 (if (= (dec (second xy)) -1) (second xy) (dec (second xy))))
-    (= character \D) (assoc xy 1 (if (= (inc (second xy)) 3) (second xy) (inc (second xy))))
-  ))) (vector 1 1) charList))
+  [sequenceList]
+  (println
+  (map get-number-for-position
+    (reduce (fn [start-position-list sequence]
+      (conj start-position-list (parse-sequence sequence (last start-position-list))))
+      (vector (vector 1 1))
+      sequenceList
+  ))) 
 )
+; 18843
 
 (defn runDay2
   "Read a file and get sequence array"
   []
   (println "Day 2")
-  (def instructionData (getInput "puzzleInput/test-input-day2.txt" do-part-1))
-  ; (do-part-1 instructionData)
-  ; (println "instructionData" instructionData)
-  ; (do-part-2 coordList)
+  (def instructionData (getInput "puzzleInput/input-day2.txt"))
+  (do-part-1 instructionData)
 )
-
-
-; (defn total-salary [path]
-;   (with-open [rdr (io/reader path)]
-;     (let [[header & body] (line-seq rdr)
-;           col (.indexOf
-;                 (str/split header #",")
-;                 "Salary")]
-;       (->> body
-;         (map #(str/split % #","))
-;         (map #(nth % col))
-;         (map #(Double/parseDouble %))
-;         (sort)
-;         (reverse)
-;         (take 10)))))
