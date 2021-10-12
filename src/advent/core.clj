@@ -7,6 +7,6 @@
   "I don't do a whole lot."
   []
   (println "Advent of Code 2016!")
-  ; (runDay1)
-  (runDay2)
+  (runDay1)
+  ; (runDay2)
 )

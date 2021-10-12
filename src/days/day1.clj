@@ -62,7 +62,6 @@
   (def positions-list 
     (reduce 
       (fn [posList indexedCoordVector]
-          ; (println posList)
           (def current (last posList))
           (def index (get indexedCoordVector 0))
           (def coord (get indexedCoordVector 1))
@@ -99,6 +98,44 @@
 )
 
 
+; -- PART 3
+
+(defn turn
+  [cardinal-direction turn]
+  (identity (cond 
+    (= cardinal-direction \N) (if (= turn \R) \E \W) 
+    (= cardinal-direction \S) (if (= turn \R) \W \E) 
+    (= cardinal-direction \W) (if (= turn \R) \N \S) 
+    (= cardinal-direction \E) (if (= turn \R) \S \N) 
+  ) )
+)
+
+(defn do-part-3
+  "Only recursion"
+  [sequence]
+  (println "sequence" sequence) 
+
+  ; (def for-count directions)
+  (def last-distance (vector 0 0))
+  (def last-direction \N)
+
+  (println (for [i sequence] 
+    ; add last coordinates with coordinates-fun results
+    ; ((let last-distance ([calculate-coordinates
+    ;                       last-distance
+    ;                       (substring i 0 1)
+    ;                       (substring i 1 (string-length (i)))
+    ;                       last-direction])
+    ; save distanca as last direction
+    ; save direction as last direction
+    ; (def last-direction (turn last-direction (first i)))
+    ; (identity last-direction)
+    ; (let last-state ([turn last-state (substring i 0 1)]))
+    (do (def last-direction (turn last-direction (first i)))
+    (identity last-direction))
+  ))
+)
+
 (defn runDay1
   "Read a file and get sequence array"
   []
@@ -106,6 +143,7 @@
   (def coordList (str/split (first (getInput "puzzleInput/input-day1.txt")) #", "))
   (do-part-1 coordList)
   (do-part-2 coordList)
+  ; (do-part-3 coordList)
 )
 
 ; part 1
