@@ -1,6 +1,6 @@
 (ns days.day2
   (:require [utils.helpers :refer [getInput]])
-  (:require [clojure.string :as str]))
+)
 
 ; -- PART 1
 
@@ -106,7 +106,7 @@
   "Read a file and get sequence array"
   []
   (println "Day 2")
-  (def instructionData (getInput "puzzleInput/input-day2.txt"))
+  (def instructionData (getInput "puzzleInput/day2.txt"))
   (do-part-1 instructionData)
   (do-part-2 instructionData)
 )
