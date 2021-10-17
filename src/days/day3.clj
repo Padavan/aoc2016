@@ -87,7 +87,7 @@
   "Read a file and get triangles array"
   []
   (println "Day 3")
-  (def triangles-list (getInput "puzzleInput/day3.txt"))
+  (def triangles-list (getInput "puzzleInput/day4.txt"))
   (do-part-1 triangles-list)
   (do-part-2 triangles-list)
 )
