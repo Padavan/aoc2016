@@ -5,7 +5,7 @@
   (:require [days.day4 :refer [runDay4]])
   (:require [days.day5 :refer [runDay5]])
   (:require [days.day6 :refer [runDay6]])
-)
+  (:require [days.day7 :refer [runDay7]]))
 
 (defn -main
   "I don't do a whole lot."
@@ -16,5 +16,6 @@
   ; (runDay3)
   ; (runDay4)
   ; (runDay5)
-  (runDay6)
-)
+  ; (runDay6)
+  (runDay7)
+  (println "The end"))

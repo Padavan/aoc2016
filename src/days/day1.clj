@@ -3,58 +3,50 @@
   (:require [utils.helpers :refer [getInput]]))
 
 (defn check-list-for-vector
-    "Checking if list contains certain vector without checking cardinal direction"
-    [list point]
-    (some #(and (= (first point) (first %)) (= (second point) (second %))) list)
-)
+  "Checking if list contains certain vector without checking cardinal direction"
+  [list point]
+  (some #(and (= (first point) (first %)) (= (second point) (second %))) list))
 
 (defn calculate-distance
   "How far location vector from 0,0"
   [locationVector]
-  (+ (Math/abs (first locationVector)) (Math/abs (second locationVector)))
-)
+  (+ (Math/abs (first locationVector)) (Math/abs (second locationVector))))
 
 (defn do-part-1
   "Where we follow sequence to the end and get final destination."
   [coordList]
   (def final-destination 
-  (reduce 
-    (fn [current indexedCoordVector]
-       (def index (first indexedCoordVector))
-       (def coord (second indexedCoordVector))
-       (def side (get current 2))
-       (def diff-length (Integer/parseInt (subs coord 1 (count coord))))
-       (def isRight (= (first coord) \R))
-       (println current (if (odd? index) "y" "x") coord)
-       (cond
-         (= side "North")
-           (if isRight
-             (vector (+ (get current 0) diff-length) (get current 1) "East")
-             (vector (- (get current 0) diff-length) (get current 1) "West" )
-           )
-         (= side "East")
-           (if isRight
-             (vector (get current 0) (- (get current 1) diff-length) "South")
-             (vector (get current 0) (+ (get current 1) diff-length) "North" )
-           )
-          (= side "South")
-           (if isRight
-             (vector (- (get current 0) diff-length) (get current 1) "West")
-             (vector (+ (get current 0) diff-length) (get current 1) "East" )
-           )
-          (= side "West")
-           (if isRight
-             (vector (get current 0) (+ (get current 1) diff-length) "North")
-             (vector (get current 0) (- (get current 1) diff-length) "South" )
-           )
-           :else current 
-         ) 
-    )
-    (vector 0 0 "North")
-    (map-indexed vector coordList))
-  )
-  (println (calculate-distance final-destination))
-)
+    (reduce 
+      (fn [current indexedCoordVector]
+         (def index (first indexedCoordVector))
+         (def coord (second indexedCoordVector))
+         (def side (get current 2))
+         (def diff-length (Integer/parseInt (subs coord 1 (count coord))))
+         (def isRight (= (first coord) \R))
+         (println current (if (odd? index) "y" "x") coord)
+         (cond
+           (= side "North")
+             (if isRight
+               (vector (+ (get current 0) diff-length) (get current 1) "East")
+               (vector (- (get current 0) diff-length) (get current 1) "West" ))
+           (= side "East")
+             (if isRight
+               (vector (get current 0) (- (get current 1) diff-length) "South")
+               (vector (get current 0) (+ (get current 1) diff-length) "North" ))
+            (= side "South")
+             (if isRight
+               (vector (- (get current 0) diff-length) (get current 1) "West")
+               (vector (+ (get current 0) diff-length) (get current 1) "East" ))
+            (= side "West")
+             (if isRight
+               (vector (get current 0) (+ (get current 1) diff-length) "North")
+               (vector (get current 0) (- (get current 1) diff-length) "South" ))
+             :else current 
+           ) 
+      )
+      (vector 0 0 "North")
+      (map-indexed vector coordList)))
+  (println (calculate-distance final-destination)))
 
 (defn do-part-2
   "Where we follow sequence but stop at the first position we visit twice"
@@ -85,21 +77,13 @@
               )
               (= side "West") (for [delta-y delta-range
                 :let [newPoint (vector (first current) ((if isRight + -) (second current) delta-y) (if isRight "North" "South"))]]
-                (if (check-list-for-vector posList newPoint) (assoc newPoint 2 "STOP") newPoint)
-              )
-           )
-         )
-      )
+                (if (check-list-for-vector posList newPoint) (assoc newPoint 2 "STOP") newPoint)))))
      (list (vector 0 0 "North"))
-     (map-indexed vector coordList))
-   )
-
+     (map-indexed vector coordList)))
   (println (calculate-distance(first (filter #(= (get % 2) "STOP") positions-list))))
 )
 
-
 ; -- PART 3
-
 (defn turn
   [cardinal-direction turn]
   (identity (cond 
@@ -107,32 +91,6 @@
     (= cardinal-direction \S) (if (= turn \R) \W \E) 
     (= cardinal-direction \W) (if (= turn \R) \N \S) 
     (= cardinal-direction \E) (if (= turn \R) \S \N) 
-  ) )
-)
-
-(defn do-part-3
-  "Only recursion"
-  [sequence]
-  (println "sequence" sequence) 
-
-  ; (def for-count directions)
-  (def last-distance (vector 0 0))
-  (def last-direction \N)
-
-  (println (for [i sequence] 
-    ; add last coordinates with coordinates-fun results
-    ; ((let last-distance ([calculate-coordinates
-    ;                       last-distance
-    ;                       (substring i 0 1)
-    ;                       (substring i 1 (string-length (i)))
-    ;                       last-direction])
-    ; save distanca as last direction
-    ; save direction as last direction
-    ; (def last-direction (turn last-direction (first i)))
-    ; (identity last-direction)
-    ; (let last-state ([turn last-state (substring i 0 1)]))
-    (do (def last-direction (turn last-direction (first i)))
-    (identity last-direction))
   ))
 )
 
@@ -142,9 +100,7 @@
 
   (def coordList (str/split (first (getInput "puzzleInput/input-day1.txt")) #", "))
   (do-part-1 coordList)
-  (do-part-2 coordList)
-  ; (do-part-3 coordList)
-)
+  (do-part-2 coordList))
 
 ; part 1
 ; 242
